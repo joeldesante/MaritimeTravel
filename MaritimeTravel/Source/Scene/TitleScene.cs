@@ -25,7 +25,6 @@ namespace MaritimeTravel.Source.Scene {
         public override void LoadContent() {
             Texture2D logoTexture = game.Content.Load<Texture2D>("logo");
             logo = new IntroText(logoTexture);
-            logo.Transform.Scale = new Vector2(0.3f);
             logo.Drawable.Origin = new Vector2(logo.Drawable.Texture.Width / 2, logo.Drawable.Texture.Height / 2);
             gameObjects.Add(logo);
         }
@@ -35,10 +34,26 @@ namespace MaritimeTravel.Source.Scene {
         }
 
         public override void Update(GameTime gameTime) {
-            logo.Transform.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
+
+            // Update the dimensions of the graphic
+            int viewportWidth = game.GraphicsDevice.Viewport.Width;
+            int viewportHeight = game.GraphicsDevice.Viewport.Height;
+            float textureAspectRatio = logo.Drawable.Texture.Width / logo.Drawable.Texture.Height;
+            int logoMargin = viewportWidth / 2;
+            int calculatedWidth = viewportWidth - logoMargin;
+
+            logo.Transform.Dimensions = new Vector2(calculatedWidth, calculatedWidth / textureAspectRatio);
+
+            // Center the logo
+            logo.Transform.Position = new Vector2(
+                viewportWidth / 2, 
+                viewportHeight / 2
+            );
             
+            // Update the transparency
             logo.Drawable.ColorMask = Color.White * (float) (gameTime.TotalGameTime.TotalSeconds / 10);
-            logo.Transform.Rotate((float) gameTime.ElapsedGameTime.TotalSeconds);
+
+
         }
     }
 }

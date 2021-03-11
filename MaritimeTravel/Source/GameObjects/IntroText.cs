@@ -10,7 +10,7 @@ namespace MaritimeTravel.Source.GameObjects {
         public GameComponents.Drawable Drawable { get; }
 
         public IntroText(Texture2D texture) {
-            Transform = new GameComponents.Transform();
+            Transform = new GameComponents.Transform(new Vector2(0, 0));
             Drawable = new GameComponents.Drawable(texture);
         }
 

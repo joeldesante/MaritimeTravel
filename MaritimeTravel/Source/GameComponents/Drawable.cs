@@ -15,14 +15,19 @@ namespace MaritimeTravel.Source.GameComponents {
         }
 
         public void Draw(SpriteBatch spriteBatch, Transform transform) {
+
+            Point scale = new Point(
+                (int) (transform.Dimensions.X * transform.Scale.X), 
+                (int) (transform.Dimensions.Y * transform.Scale.Y)
+            );
+
             spriteBatch.Draw(
-                Texture,
-                transform.Position,
-                null,
+                Texture, 
+                new Rectangle(transform.Position.ToPoint(), scale), 
+                null, 
                 ColorMask,
                 transform.Rotation,
                 Origin,
-                transform.Scale,
                 SpriteEffects.None,
                 0f
             );
