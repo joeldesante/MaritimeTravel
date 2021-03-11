@@ -1,31 +1,36 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MaritimeTravel.Source.Scene;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace MaritimeTravel {
-    public class Main : Game {
+    public class MaritimeTravel : Game {
 
-        private Texture2D logo;
+        
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private TitleScene scene;
 
-        public Main() {
+        public MaritimeTravel() {
             _graphics = new GraphicsDeviceManager(this);
+            Window.AllowUserResizing = true;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            scene = new TitleScene(this);
         }
 
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            logo = Content.Load<Texture2D>("logo");
+            scene.LoadContent();
 
             // TODO: use this.Content to load your game content here
         }
@@ -35,6 +40,7 @@ namespace MaritimeTravel {
                 Exit();
 
             // TODO: Add your update logic here
+            scene.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -42,18 +48,19 @@ namespace MaritimeTravel {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            /*_spriteBatch.Draw(
                 logo,
                 new Vector2(_graphics.GraphicsDevice.Viewport.Width / 2, _graphics.GraphicsDevice.Viewport.Height / 2),
                 null,
-                Color.White,
+                Color.White * (float) (gameTime.TotalGameTime.TotalSeconds / 10),
                 0f,
                 new Vector2(logo.Width / 2, logo.Height / 2),
                 Vector2.One / 3,
                 SpriteEffects.None,
                 0f
-            );
+            );*/
+            scene.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
             // TODO: Add your drawing code here

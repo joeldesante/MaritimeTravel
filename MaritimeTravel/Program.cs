@@ -4,7 +4,7 @@ namespace MaritimeTravel {
     public static class Program {
         [STAThread]
         static void Main() {
-            using (var game = new Main())
+            using (var game = new MaritimeTravel())
                 game.Run();
         }
     }
