@@ -2,15 +2,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace MaritimeTravel {
     public class MaritimeTravel : Game {
 
-        
-
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private TitleScene scene;
+        private Dictionary<string, Scene> registeredScenes;
+        private Scene currentScene;
 
         public MaritimeTravel() {
             _graphics = new GraphicsDeviceManager(this);
@@ -18,19 +18,29 @@ namespace MaritimeTravel {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            scene = new TitleScene(this);
+            // Scenes
+            registeredScenes = new Dictionary<string, Scene>();
+            registeredScenes.Add("title", new TitleScene(this));
+            registeredScenes.Add("tutorial", new TutorialScene(this));
+
+            currentScene = registeredScenes["title"];
+        }
+        public void ChangeScene(string registeredSceneName) {
+            currentScene = registeredScenes[registeredSceneName];
         }
 
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            
+
             base.Initialize();
         }
 
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            scene.LoadContent();
+            foreach (Scene scene in registeredScenes.Values) {
+                scene.LoadContent();
+            }
 
             // TODO: use this.Content to load your game content here
         }
@@ -40,7 +50,7 @@ namespace MaritimeTravel {
                 Exit();
 
             // TODO: Add your update logic here
-            scene.Update(gameTime);
+            currentScene.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -49,18 +59,7 @@ namespace MaritimeTravel {
             GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            /*_spriteBatch.Draw(
-                logo,
-                new Vector2(_graphics.GraphicsDevice.Viewport.Width / 2, _graphics.GraphicsDevice.Viewport.Height / 2),
-                null,
-                Color.White * (float) (gameTime.TotalGameTime.TotalSeconds / 10),
-                0f,
-                new Vector2(logo.Width / 2, logo.Height / 2),
-                Vector2.One / 3,
-                SpriteEffects.None,
-                0f
-            );*/
-            scene.Draw(_spriteBatch, gameTime);
+            currentScene.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
             // TODO: Add your drawing code here

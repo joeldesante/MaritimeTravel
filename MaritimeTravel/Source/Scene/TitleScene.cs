@@ -8,14 +8,13 @@ using System.Text;
 namespace MaritimeTravel.Source.Scene {
     class TitleScene : Scene {
 
-        private MaritimeTravel game;
         private List<GameObjects.GameObject> gameObjects;
 
         private IntroText logo;
-        
-        public TitleScene(MaritimeTravel game) {
-            this.game = game;
-            this.gameObjects = new List<GameObjects.GameObject>();
+        private double totalSceneTime;
+
+        public TitleScene(MaritimeTravel game): base(game) {
+            this.gameObjects = new List<GameObject>();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
@@ -53,7 +52,11 @@ namespace MaritimeTravel.Source.Scene {
             // Update the transparency
             logo.Drawable.ColorMask = Color.White * (float) (gameTime.TotalGameTime.TotalSeconds / 10);
 
+            totalSceneTime += gameTime.ElapsedGameTime.TotalSeconds;
 
+            if (totalSceneTime >= 12) {
+                base.game.ChangeScene("tutorial");
+            }
         }
     }
 }
