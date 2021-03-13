@@ -8,7 +8,7 @@ namespace MaritimeTravel.Source.Scene {
         private Dictionary<string, Scene> registeredScenes;
 
         public void LoadScenesFromFile() {
-            string sceneDirectory = "J:\\Development\\Games\\MaritimeTravel\\MaritimeTravel\\Scenes";
+            string sceneDirectory = "C:\\Users\\Kai\\source\\repos\\MaritimeTravel\\MaritimeTravel\\Scenes";
             string[] scenes = System.IO.Directory.GetFiles(sceneDirectory);
 
             List<XmlDocument> scenesXml = new List<XmlDocument>();
