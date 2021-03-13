@@ -7,11 +7,11 @@ using System.Text;
 namespace MaritimeTravel.Source.GameObjects.TutorialSceneObjects {
     class TutorialText : GameObject {
         public GameComponents.Transform Transform { get; }
-        public GameComponents.Drawable Drawable { get; }
+        public GameComponents.Sprite Drawable { get; }
 
         public TutorialText(Texture2D texture) {
             Transform = new GameComponents.Transform();
-            Drawable = new GameComponents.Drawable(texture);
+            Drawable = new GameComponents.Sprite(texture);
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {

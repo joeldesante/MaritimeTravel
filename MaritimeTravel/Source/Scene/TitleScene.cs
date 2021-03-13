@@ -21,6 +21,10 @@ namespace MaritimeTravel.Source.Scene {
             logo.Draw(spriteBatch, gameTime);
         }
 
+        public override void Initialize() {
+            //
+        }
+
         public override void LoadContent() {
             Texture2D logoTexture = game.Content.Load<Texture2D>("logo");
             logo = new IntroText(logoTexture);
@@ -54,7 +58,7 @@ namespace MaritimeTravel.Source.Scene {
 
             totalSceneTime += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (totalSceneTime >= 12) {
+            if (totalSceneTime >= 2) {
                 base.game.ChangeScene("tutorial");
             }
         }

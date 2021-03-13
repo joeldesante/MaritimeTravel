@@ -1,4 +1,5 @@
-﻿using MaritimeTravel.Source.Scene;
+﻿
+using MaritimeTravel.Source.Scene;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +19,8 @@ namespace MaritimeTravel {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            new SceneManager().LoadScenesFromFile();
+
             // Scenes
             registeredScenes = new Dictionary<string, Scene>();
             registeredScenes.Add("title", new TitleScene(this));
@@ -27,6 +30,7 @@ namespace MaritimeTravel {
         }
         public void ChangeScene(string registeredSceneName) {
             currentScene = registeredScenes[registeredSceneName];
+            currentScene.Initialize();
         }
 
         protected override void Initialize() {
@@ -58,7 +62,7 @@ namespace MaritimeTravel {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
             currentScene.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 

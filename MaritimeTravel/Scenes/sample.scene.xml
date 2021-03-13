@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene>
+	<meta>
+		<name>test_scene</name>
+		<assets>
+			<asset path="x/y/z" type="sfx" name="asset_name"/>
+			<asset path="x/y/z" type="texture" name="asset_name_2"/>
+		</assets>
+	</meta>
+</scene>
