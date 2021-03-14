@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using MaritimeTravel.Source.GameComponents;
 using Microsoft.Xna.Framework.Input;
+using MaritimeTravel.Source.Systems;
 
 namespace MaritimeTravel.Source.GameObjects {
     class Fish : GameObject {
@@ -22,11 +23,11 @@ namespace MaritimeTravel.Source.GameObjects {
             this.transform.Scale *= 3;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-            fishSprite.Draw(spriteBatch, transform);
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {
+            fishSprite.Draw(spriteBatch, transform, camera);
         }
 
-        public override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime, Camera camera) {
             Vector2 invertedY = new Vector2(
                 GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X,
                 -GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y
@@ -34,6 +35,8 @@ namespace MaritimeTravel.Source.GameObjects {
 
             physics.AddForce(invertedY * physics.Mass * 5);
             physics.Update(transform, gameTime);
+
+            camera.Offset = transform.Position;
         }
     }
 }

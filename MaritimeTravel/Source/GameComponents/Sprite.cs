@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MaritimeTravel.Source.Systems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MaritimeTravel.Source.GameComponents {
@@ -20,7 +21,7 @@ namespace MaritimeTravel.Source.GameComponents {
             Origin = origin;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Transform transform) {
+        public void Draw(SpriteBatch spriteBatch, Transform transform, Camera camera) {
 
             Point scale = new Point(
                 (int) (transform.Dimensions.X * transform.Scale.X), 
@@ -29,7 +30,7 @@ namespace MaritimeTravel.Source.GameComponents {
 
             spriteBatch.Draw(
                 Texture, 
-                new Rectangle(transform.Position.ToPoint(), scale), 
+                new Rectangle(transform.Position.ToPoint() - camera.Offset.ToPoint(), scale), 
                 null, 
                 ColorMask,
                 transform.Rotation,

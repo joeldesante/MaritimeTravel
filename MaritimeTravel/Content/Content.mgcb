@@ -31,7 +31,7 @@
 /processorParam:TextureFormat=Color
 /build:images/fish.png
 
-#begin images/tutorial/Tutorial.png
+#begin images/tutorial/Bubble.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -41,7 +41,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/tutorial/Tutorial.png
+/build:images/tutorial/Bubble.png
 
 #begin images/tutorial/Tutorial.png
 /importer:TextureImporter
