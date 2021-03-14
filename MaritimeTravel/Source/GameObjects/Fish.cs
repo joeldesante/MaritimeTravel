@@ -6,13 +6,12 @@ using System.Text;
 using MaritimeTravel.Source.GameComponents;
 using Microsoft.Xna.Framework.Input;
 
-
-
 namespace MaritimeTravel.Source.GameObjects {
     class Fish : GameObject {
         private Transform transform;
         private Sprite fishSprite;
         private Rigidbody physics;
+        private Health health;
 
         float lastSwimPosition = 1f;
 
