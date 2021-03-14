@@ -16,6 +16,8 @@ namespace MaritimeTravel.Source.GameObjects.TutorialSceneObjects {
             this.sprite = new Sprite(texture);
             this.transform = new Transform(new Vector2(texture.Width, texture.Height));
             this.transform.Position = new Vector2(100, 100);
+
+            this.sprite.LayerDepth = 0;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {

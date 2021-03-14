@@ -21,6 +21,7 @@ namespace MaritimeTravel.Source.GameObjects {
             this.physics = new Rigidbody(30);
             this.health = new Health();
             this.transform.Scale *= 3;
+            this.fishSprite.LayerDepth = 1;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {
