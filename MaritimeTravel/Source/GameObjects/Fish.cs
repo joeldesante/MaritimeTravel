@@ -6,18 +6,18 @@ using System.Text;
 using MaritimeTravel.Source.GameComponents;
 using Microsoft.Xna.Framework.Input;
 
-
-
 namespace MaritimeTravel.Source.GameObjects {
     class Fish : GameObject {
         private Transform transform;
         private Sprite fishSprite;
         private Rigidbody physics;
+        private Health health;
 
         public Fish(Texture2D fishTexture) {
             this.fishSprite = new Sprite(fishTexture, new Vector2(fishTexture.Width / 2, fishTexture.Height / 2));
             transform = new Transform();
             physics = new Rigidbody(30);
+            health = new Health();
 
             transform.Scale *= 5;
         }
