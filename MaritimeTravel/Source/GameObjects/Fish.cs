@@ -14,14 +14,16 @@ namespace MaritimeTravel.Source.GameObjects {
         private Sprite fishSprite;
         private Rigidbody physics;
         private Health health;
+        private Vector2 viewportDimensions;
 
-        public Fish(Texture2D fishTexture) {
+        public Fish(Texture2D fishTexture, Vector2 viewportDimensions) {
             this.fishSprite = new Sprite(fishTexture, new Vector2(fishTexture.Width / 2, fishTexture.Height / 2));
             this.transform = new Transform();
             this.physics = new Rigidbody(30);
             this.health = new Health();
             this.transform.Scale *= 3;
             this.fishSprite.LayerDepth = 1;
+            this.viewportDimensions = viewportDimensions;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {
@@ -37,7 +39,7 @@ namespace MaritimeTravel.Source.GameObjects {
             physics.AddForce(invertedY * physics.Mass * 5);
             physics.Update(transform, gameTime);
 
-            camera.Offset = transform.Position;
+            camera.Offset = transform.Position - (viewportDimensions/2);
         }
     }
 }
