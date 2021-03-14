@@ -19,7 +19,7 @@ namespace MaritimeTravel.Source.GameObjects {
         public Fish(Texture2D fishTexture) {
             fishSprite = new Sprite(fishTexture, new Vector2(fishTexture.Width / 2, fishTexture.Height / 2));
             transform = new Transform();
-            physics = new Rigidbody(30, 0.1f);
+            physics = new Rigidbody(30, 0.05f);
 
             transform.Scale *= 1;
         }
@@ -35,20 +35,25 @@ namespace MaritimeTravel.Source.GameObjects {
             else if (GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y > 0.2f)
                 currentSwimPosition = 1f;
 
-            if (currentSwimPosition != lastSwimPosition)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.B != ButtonState.Pressed) //Not in Drift mode
             {
-                lastSwimPosition = currentSwimPosition;
+                Vector2 parallelAxis = new Vector2((float)Math.Cos(transform.Rotation), (float)Math.Sin(transform.Rotation));
+                Vector2 perpendicularAxis = new Vector2((float)Math.Cos(transform.Rotation - Math.PI / 2), (float)Math.Sin(transform.Rotation - Math.PI / 2));
+                physics.AddForce(perpendicularAxis * Math.Min(-Vector2.Dot(perpendicularAxis, physics.Velocity) * 500f, 500f));
+                physics.AddForce(parallelAxis * -Math.Min(Vector2.Dot(parallelAxis, physics.Velocity), 0) * 100f);
+                
+                if (currentSwimPosition != lastSwimPosition)
+                {
+                    lastSwimPosition = currentSwimPosition;
 
-                Vector2 parallelForce = new Vector2((float)Math.Cos(transform.Rotation), (float)Math.Sin(transform.Rotation));
-                physics.AddForce(parallelForce * physics.Mass * 75f);
-
-                physics.AddTorque(lastSwimPosition * 100f);
+                    physics.AddForce(parallelAxis * physics.Mass * 75f);
+                    physics.AddTorque(lastSwimPosition * physics.Velocity.Length() * 25f);
+                }
             }
-            physics.AddTorque(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y * 5f);
+            else
+                lastSwimPosition = 0f;
 
-            Vector2 perpendicularForce;
-            perpendicularForce = new Vector2((float)Math.Cos(transform.Rotation - Math.PI / 2), (float)Math.Sin(transform.Rotation - Math.PI / 2));
-            physics.AddForce(perpendicularForce * -Vector2.Dot(perpendicularForce, physics.Velocity) * 500f);
+            physics.AddTorque(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y * 5f);
 
             physics.Update(transform, gameTime);
         }
