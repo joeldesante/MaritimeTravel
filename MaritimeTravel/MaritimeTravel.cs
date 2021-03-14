@@ -19,8 +19,6 @@ namespace MaritimeTravel {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            new SceneManager().LoadScenesFromFile();
-
             // Scenes
             registeredScenes = new Dictionary<string, Scene>();
             registeredScenes.Add("title", new TitleScene(this));
