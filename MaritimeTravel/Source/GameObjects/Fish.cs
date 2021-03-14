@@ -29,11 +29,6 @@ namespace MaritimeTravel.Source.GameObjects {
         }
 
         public override void Update(GameTime gameTime) {
-            Vector2 invertedY = new Vector2(
-                GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X,
-                -GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y
-            );
-
             float currentSwimPosition = lastSwimPosition;
             if (GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y < -0.2f)
                 currentSwimPosition = -1f;
@@ -47,13 +42,13 @@ namespace MaritimeTravel.Source.GameObjects {
                 Vector2 parallelForce = new Vector2((float)Math.Cos(transform.Rotation), (float)Math.Sin(transform.Rotation));
                 physics.AddForce(parallelForce * physics.Mass * 75f);
 
-                Vector2 perpendicularForce;
-                perpendicularForce = new Vector2((float)Math.Cos(transform.Rotation - Math.PI / 2), (float)Math.Sin(transform.Rotation - Math.PI / 2));
-                physics.AddForce(lastSwimPosition * perpendicularForce * physics.Velocity.Length() * 1000f);
-
-                physics.AddForce(lastSwimPosition * 100f);
+                physics.AddTorque(lastSwimPosition * 100f);
             }
-            physics.AddForce(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y * 5f);
+            physics.AddTorque(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y * 5f);
+
+            Vector2 perpendicularForce;
+            perpendicularForce = new Vector2((float)Math.Cos(transform.Rotation - Math.PI / 2), (float)Math.Sin(transform.Rotation - Math.PI / 2));
+            physics.AddForce(perpendicularForce * -Vector2.Dot(perpendicularForce, physics.Velocity) * 500f);
 
             physics.Update(transform, gameTime);
         }

@@ -34,8 +34,8 @@ namespace MaritimeTravel.Source.GameComponents {
             Acceleration += force / Mass;
         }
 
-        public void AddForce(float angularForce) {
-            AngularAcceleration += angularForce / Mass;
+        public void AddTorque(float torque) {
+            AngularAcceleration += torque / Mass;
         }
     }
 }
