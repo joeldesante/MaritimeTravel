@@ -44,9 +44,7 @@ namespace MaritimeTravel.Source.GameComponents {
             Vector2 spritePosition = transform.Position;
             Vector2 cameraOffset = camera.Offset;
             Vector2 cameraOrigin = camera.Origin;
-
             Vector2 positionRelativeToOrigin = spritePosition - cameraOrigin;
-            //float rotationalOffsetAsDegrees = MathHelper.ToDegrees(rotationalOffset);
 
             float CosineTheta = (float) Math.Cos(rotationalOffset);
             float SineTheta = (float) Math.Sin(rotationalOffset);
@@ -56,12 +54,6 @@ namespace MaritimeTravel.Source.GameComponents {
             calculatedPosition.Y = (positionRelativeToOrigin.X * SineTheta) + (positionRelativeToOrigin.Y * CosineTheta);
 
             Vector2 finalPosition = calculatedPosition - cameraOffset;
-            //System.Diagnostics.Debug.WriteLine(debugName + ": " + calculatedPosition);
-            //System.Diagnostics.Debug.WriteLine(debugName + ": " + cameraOffset);
-
-            //float rotation = (float) Math.Abs(Math.Atan2(calculatedPosition.Y, calculatedPosition.X));
-            Vector2 relativeRoatation = new Vector2();
-            
 
             spriteBatch.Draw(
                 Texture, 
