@@ -35,7 +35,7 @@ namespace MaritimeTravel.Source.Scene {
             registeredTextures.Add("bubble", game.Content.Load<Texture2D>("images/tutorial/Bubble"));
 
             // Create the game objects
-            gameObjects.Add(new Fish(registeredTextures["fish"], new Vector2(this.game.GraphicsDevice.Viewport.Width, this.game.GraphicsDevice.Viewport.Height)));
+            gameObjects.Add(new Fish(registeredTextures["fish"], this.game));
             gameObjects.Add(new Bubble(registeredTextures["bubble"]));
         }
 

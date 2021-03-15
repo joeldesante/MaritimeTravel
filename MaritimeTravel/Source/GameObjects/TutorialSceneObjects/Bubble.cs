@@ -15,7 +15,7 @@ namespace MaritimeTravel.Source.GameObjects.TutorialSceneObjects {
         public Bubble(Texture2D texture) {
             this.sprite = new Sprite(texture);
             this.transform = new Transform(new Vector2(texture.Width, texture.Height));
-            this.transform.Position = new Vector2(100, 100);
+            this.transform.Position = new Vector2(500, 500);
 
             this.sprite.LayerDepth = 0;
         }
