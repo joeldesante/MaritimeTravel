@@ -61,6 +61,8 @@ namespace MaritimeTravel.Source.GameObjects {
             physics.AddTorque(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y * 5f);
             physics.Update(transform, gameTime);
 
+            camera.Origin = transform.Position;
+
             Vector2 viewportDimensions = new Vector2(this.game.GraphicsDevice.Viewport.Width, this.game.GraphicsDevice.Viewport.Height);
             camera.Offset = -(viewportDimensions/2);
             //camera.RotationalOffset += (float) 0.001;
