@@ -27,7 +27,7 @@ namespace MaritimeTravel.Source.GameObjects {
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {
-            fishSprite.Draw(spriteBatch, transform, camera);
+            fishSprite.Draw(spriteBatch, transform, camera, "Fish");
         }
 
         public override void Update(GameTime gameTime, Camera camera) {
@@ -42,8 +42,8 @@ namespace MaritimeTravel.Source.GameObjects {
             camera.Origin = transform.Position;
 
             Vector2 viewportDimensions = new Vector2(this.game.GraphicsDevice.Viewport.Width, this.game.GraphicsDevice.Viewport.Height);
-            camera.Offset = transform.Position - (viewportDimensions/2);
-            camera.RotationalOffset += (float) ((Math.PI / 4) * gameTime.ElapsedGameTime.TotalSeconds);
+            camera.Offset = -(viewportDimensions/2);
+            camera.RotationalOffset += (float) 0.001;
             //camera.RotationalOffset = 0f;
             transform.Rotation = -camera.RotationalOffset;
         }

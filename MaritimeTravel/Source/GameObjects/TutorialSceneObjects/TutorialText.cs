@@ -16,7 +16,7 @@ namespace MaritimeTravel.Source.GameObjects.TutorialSceneObjects {
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {
-            Drawable.Draw(spriteBatch, Transform, camera);
+            Drawable.Draw(spriteBatch, Transform, camera, "TutText");
         }
 
         public override void Update(GameTime gameTime, Camera camera) {

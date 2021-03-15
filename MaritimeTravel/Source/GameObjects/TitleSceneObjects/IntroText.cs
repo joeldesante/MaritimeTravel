@@ -19,7 +19,7 @@ namespace MaritimeTravel.Source.GameObjects {
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {
-            Drawable.Draw(spriteBatch, Transform, camera);
+            Drawable.Draw(spriteBatch, Transform, camera, "IntroText");
         }
 
         public override void Update(GameTime gameTime, Camera camera) {

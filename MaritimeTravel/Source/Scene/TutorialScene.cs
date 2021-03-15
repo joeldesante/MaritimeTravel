@@ -33,10 +33,31 @@ namespace MaritimeTravel.Source.Scene {
             // Load the textures
             registeredTextures.Add("fish", game.Content.Load<Texture2D>("images/fish"));
             registeredTextures.Add("bubble", game.Content.Load<Texture2D>("images/tutorial/Bubble"));
+            registeredTextures.Add("floor", game.Content.Load<Texture2D>("images/SeaFloor"));
 
             // Create the game objects
             gameObjects.Add(new Fish(registeredTextures["fish"], this.game));
+
+            Bubble b2 = new Bubble(registeredTextures["bubble"]);
+            b2.Transform.Position = new Vector2(100, 100);
+
             gameObjects.Add(new Bubble(registeredTextures["bubble"]));
+            gameObjects.Add(b2);
+
+            for (int i = 0; i < 25; i++) {
+                Bubble b = new Bubble(registeredTextures["bubble"]);
+                Random r = new Random();
+                b.Transform.Position = new Vector2(
+                    r.Next(-game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Width),
+                    r.Next(-game.GraphicsDevice.Viewport.Height, game.GraphicsDevice.Viewport.Height)
+                );
+
+                b.Transform.Scale = new Vector2((float) Math.Clamp(r.NextDouble(), 0.1, 0.4));
+
+                gameObjects.Add(b);
+            }
+
+            gameObjects.Add(new SeaFloor(registeredTextures["floor"]));
         }
 
         public override void UnloadContent() {

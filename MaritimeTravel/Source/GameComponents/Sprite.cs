@@ -32,52 +32,43 @@ namespace MaritimeTravel.Source.GameComponents {
             this.LayerDepth = ZIndex;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Transform transform, Camera camera) {
+        public void Draw(SpriteBatch spriteBatch, Transform transform, Camera camera, string? debugName) {
 
             Point scale = new Point(
                 (int) (transform.Dimensions.X * transform.Scale.X), 
                 (int) (transform.Dimensions.Y * transform.Scale.Y)
             );
 
-            Vector2 r = new Vector2(
-                (float) (Math.Cos(camera.RotationalOffset * transform.Position.X) - Math.Sin(camera.RotationalOffset * transform.Position.Y)),
-                (float) (Math.Sin(camera.RotationalOffset * transform.Position.X) + Math.Cos(camera.RotationalOffset * transform.Position.Y))
-            );
+            // Calculate the rotation
+            float rotationalOffset = camera.RotationalOffset;       // In Radians
+            Vector2 spritePosition = transform.Position;
+            Vector2 cameraOffset = camera.Offset;
+            Vector2 cameraOrigin = camera.Origin;
 
-            Point offsetPosition = transform.Position.ToPoint() - camera.Offset.ToPoint();
-            double distanceFromOrigin = Math.Sqrt(
-                Math.Pow(transform.Position.X - camera.Origin.X, 2) + 
-                Math.Pow(transform.Position.Y - camera.Origin.Y, 2)
-            );
+            Vector2 positionRelativeToOrigin = spritePosition - cameraOrigin;
+            //float rotationalOffsetAsDegrees = MathHelper.ToDegrees(rotationalOffset);
 
-            /*
-             * Gets the relative position in which everything must be account for.
-             * Ex. (0, 1) means that everything must be rotated 90deg from the origin.
-             */
-            Vector2 rotationalOffsetPosition = new Vector2(
-                (float)Math.Cos(camera.RotationalOffset),
-                (float)Math.Sin(camera.RotationalOffset)
-            );
-            Vector2 rotatedPositionLocalSpace = transform.Position * rotationalOffsetPosition;
+            float CosineTheta = (float) Math.Cos(rotationalOffset);
+            float SineTheta = (float) Math.Sin(rotationalOffset);
+
+            Vector2 calculatedPosition = new Vector2();
+            calculatedPosition.X = (positionRelativeToOrigin.X * CosineTheta) - (positionRelativeToOrigin.Y * SineTheta);
+            calculatedPosition.Y = (positionRelativeToOrigin.X * SineTheta) + (positionRelativeToOrigin.Y * CosineTheta);
+
+            Vector2 finalPosition = calculatedPosition - cameraOffset;
+            //System.Diagnostics.Debug.WriteLine(debugName + ": " + calculatedPosition);
+            //System.Diagnostics.Debug.WriteLine(debugName + ": " + cameraOffset);
+
+            //float rotation = (float) Math.Abs(Math.Atan2(calculatedPosition.Y, calculatedPosition.X));
+            Vector2 relativeRoatation = new Vector2();
             
-            Point finalPosition = (rotationalOffsetPosition.ToPoint() * new Point((int) distanceFromOrigin));
-
-            //Point offsetPosition = rotationalOffsetPosition - camera.Offset.ToPoint();
-
-            /*System.Diagnostics.Debug.WriteLine("Position: " + transform.Position.ToPoint());
-            System.Diagnostics.Debug.WriteLine("Roational Position Offset: " + rotationalOffsetPosition);
-            System.Diagnostics.Debug.WriteLine("Rotated Position: " + rotatedPositionLocalSpace);
-            System.Diagnostics.Debug.WriteLine("Distance From Origin: " + distanceFromOrigin);
-            System.Diagnostics.Debug.WriteLine("Final Position: " + finalPosition);*/
-
-            System.Diagnostics.Debug.WriteLine("R: " + r);
 
             spriteBatch.Draw(
                 Texture, 
-                new Rectangle(finalPosition, scale), 
+                new Rectangle(finalPosition.ToPoint(), scale), 
                 null, 
                 ColorMask,
-                transform.Rotation + camera.RotationalOffset,
+                transform.Rotation + rotationalOffset,
                 Origin,
                 SpriteEffects.None,
                 Math.Clamp(LayerDepth, 0, 1)
