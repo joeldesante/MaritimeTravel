@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MaritimeTravel.Source.Systems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,11 @@ namespace MaritimeTravel.Source.GameObjects.TutorialSceneObjects {
             Drawable = new GameComponents.Sprite(texture);
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-            Drawable.Draw(spriteBatch, Transform);
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {
+            Drawable.Draw(spriteBatch, Transform, camera, "TutText");
         }
 
-        public override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime, Camera camera) {
             throw new NotImplementedException();
         }
     }

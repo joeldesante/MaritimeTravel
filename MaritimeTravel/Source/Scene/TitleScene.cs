@@ -1,4 +1,5 @@
 ﻿using MaritimeTravel.Source.GameObjects;
+using MaritimeTravel.Source.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,17 +14,18 @@ namespace MaritimeTravel.Source.Scene {
         private IntroText logo;
         private double totalSceneTime;
 
+        private Camera camera;
+
         public TitleScene(MaritimeTravel game): base(game) {
             this.gameObjects = new List<GameObject>();
+            this.camera = new Camera();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-            logo.Draw(spriteBatch, gameTime);
+            logo.Draw(spriteBatch, gameTime, camera);
         }
 
-        public override void Initialize() {
-            //
-        }
+        public override void Initialize() {}
 
         public override void LoadContent() {
             Texture2D logoTexture = game.Content.Load<Texture2D>("logo");

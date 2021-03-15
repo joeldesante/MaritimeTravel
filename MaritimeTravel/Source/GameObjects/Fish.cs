@@ -5,29 +5,35 @@ using System.Collections.Generic;
 using System.Text;
 using MaritimeTravel.Source.GameComponents;
 using Microsoft.Xna.Framework.Input;
+using MaritimeTravel.Source.Systems;
 
 namespace MaritimeTravel.Source.GameObjects {
     class Fish : GameObject {
+
         private Transform transform;
         private Sprite fishSprite;
         private Rigidbody physics;
         private Health health;
+        private MaritimeTravel game;
 
         float lastSwimPosition = 1f;
 
-        public Fish(Texture2D fishTexture) {
-            fishSprite = new Sprite(fishTexture, new Vector2(fishTexture.Width / 2, fishTexture.Height / 2));
-            transform = new Transform();
-            physics = new Rigidbody(30, 0.05f);
 
-            transform.Scale *= 1;
+        public Fish(Texture2D fishTexture, MaritimeTravel game) {
+            this.fishSprite = new Sprite(fishTexture, new Vector2(fishTexture.Width / 2, fishTexture.Height / 2));
+            this.transform = new Transform();
+            this.physics = new Rigidbody(30, 0.05f);
+            this.health = new Health();
+            this.transform.Scale *= 1;
+            this.fishSprite.LayerDepth = 1;
+            this.game = game;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-            fishSprite.Draw(spriteBatch, transform);
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera) {
+            fishSprite.Draw(spriteBatch, transform, camera, "Fish");
         }
 
-        public override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime, Camera camera) {
             float currentSwimPosition = lastSwimPosition;
             if (GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y < -0.2f)
                 currentSwimPosition = -1f;
@@ -53,8 +59,14 @@ namespace MaritimeTravel.Source.GameObjects {
                 lastSwimPosition = 0f;
 
             physics.AddTorque(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y * 5f);
-
             physics.Update(transform, gameTime);
+
+            Vector2 viewportDimensions = new Vector2(this.game.GraphicsDevice.Viewport.Width, this.game.GraphicsDevice.Viewport.Height);
+            camera.Offset = transform.Position - (viewportDimensions/2);
+            //camera.RotationalOffset += (float) 0.001;
+            //camera.RotationalOffset = 0f;
+            //transform.Rotation = -camera.RotationalOffset;
+            camera.RotationalOffset = -transform.Rotation;
         }
     }
 }
