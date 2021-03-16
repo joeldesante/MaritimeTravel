@@ -44,7 +44,6 @@ namespace MaritimeTravel.Source.GameObjects {
             Vector2 viewportDimensions = new Vector2(this.game.GraphicsDevice.Viewport.Width, this.game.GraphicsDevice.Viewport.Height);
             camera.Offset = -(viewportDimensions/2);
             camera.RotationalOffset += (float) gameTime.ElapsedGameTime.TotalSeconds;
-            //camera.RotationalOffset = 0f;
             transform.Rotation = -camera.RotationalOffset;
         }
     }
