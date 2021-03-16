@@ -39,8 +39,8 @@ namespace MaritimeTravel.Source.GameComponents {
         public void Draw(SpriteBatch spriteBatch, Transform transform, Camera camera, string? debugName) {
 
             Point scale = new Point(
-                (int) (Dimensions.X * transform.Scale.X * camera.Zoom), 
-                (int) (Dimensions.Y * transform.Scale.Y * camera.Zoom)
+                (int) (Dimensions.X * transform.Scale.X * camera.Zoom * camera.GlobalScale.X), 
+                (int) (Dimensions.Y * transform.Scale.Y * camera.Zoom * camera.GlobalScale.Y)
             );
 
             // Calculate the rotation
@@ -59,9 +59,8 @@ namespace MaritimeTravel.Source.GameComponents {
 
             Vector2 finalPosition = calculatedPosition - cameraOffset;*/
 
-            Vector2 finalPosition = Vector2.Transform(transform.Position, camera.transformation);
+            Vector2 finalPosition = Vector2.Transform(transform.Position * camera.GlobalScale, camera.transformation);
             float rotationalOffset = camera.RotationalOffset;
-
 
             spriteBatch.Draw(
                 Texture, 
