@@ -59,7 +59,7 @@ namespace MaritimeTravel.Source.GameComponents {
 
             Vector2 finalPosition = calculatedPosition - cameraOffset;*/
 
-            Vector2 finalPosition = Vector2.Transform(transform.Position * camera.GlobalScale, camera.transformation);
+            Vector2 finalPosition = Vector2.Transform(transform.Position, camera.transformation);
             float rotationalOffset = camera.RotationalOffset;
 
             spriteBatch.Draw(

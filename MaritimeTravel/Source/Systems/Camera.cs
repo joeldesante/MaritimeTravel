@@ -35,8 +35,16 @@ namespace MaritimeTravel.Source.Systems {
             Matrix rotate = Matrix.CreateRotationZ(RotationalOffset);
             Matrix translate_offset = Matrix.CreateTranslation(new Vector3(-Offset.X, -Offset.Y, 0));
             Matrix scale = Matrix.CreateScale(Zoom);
+            Matrix globalScale = Matrix.CreateScale(new Vector3(GlobalScale.X, GlobalScale.Y, 0)); ;
 
-            transformation = Matrix.Multiply(Matrix.Multiply(Matrix.Multiply(translate_origin, rotate), scale), translate_offset);
+            transformation =
+                Matrix.Multiply(
+                    Matrix.Multiply(
+                        Matrix.Multiply(
+                            Matrix.Multiply(translate_origin, rotate),
+                        scale),
+                    globalScale),
+                translate_offset); ;
         }
 
         public void CalculateGlobalScale(Vector2 viewportDimensions) {
