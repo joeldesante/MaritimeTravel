@@ -19,8 +19,6 @@ namespace MaritimeTravel {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            new SceneManager().LoadScenesFromFile();
-
             // Scenes
             registeredScenes = new Dictionary<string, Scene>();
             registeredScenes.Add("title", new TitleScene(this));
@@ -62,7 +60,7 @@ namespace MaritimeTravel {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp);
             currentScene.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
