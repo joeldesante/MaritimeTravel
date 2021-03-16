@@ -8,6 +8,7 @@ namespace MaritimeTravel.Source.GameComponents {
 
         public Vector2 Origin { get; set; }
         public Texture2D Texture { get; }
+        public Vector2 Dimensions { get; set; }
         public Color ColorMask { get; set; }
         public float LayerDepth { get; set; }
 
@@ -16,6 +17,7 @@ namespace MaritimeTravel.Source.GameComponents {
             ColorMask = Color.White;
             Origin = new Vector2(0f, 0f);
             LayerDepth = 0;
+            Dimensions = new Vector2(texture.Width, texture.Height);
         }
 
         public Sprite(Texture2D texture, Vector2 origin) {
@@ -23,6 +25,7 @@ namespace MaritimeTravel.Source.GameComponents {
             ColorMask = Color.White;
             Origin = origin;
             LayerDepth = 0;
+            Dimensions = new Vector2(texture.Width, texture.Height);
         }
 
         public Sprite(Texture2D texture, Vector2 origin, int ZIndex) {
@@ -30,17 +33,18 @@ namespace MaritimeTravel.Source.GameComponents {
             ColorMask = Color.White;
             Origin = origin;
             this.LayerDepth = ZIndex;
+            Dimensions = new Vector2(texture.Width, texture.Height);
         }
 
         public void Draw(SpriteBatch spriteBatch, Transform transform, Camera camera, string? debugName) {
 
             Point scale = new Point(
-                (int) (transform.Dimensions.X * transform.Scale.X), 
-                (int) (transform.Dimensions.Y * transform.Scale.Y)
+                (int) (Dimensions.X * transform.Scale.X * camera.Zoom), 
+                (int) (Dimensions.Y * transform.Scale.Y * camera.Zoom)
             );
 
             // Calculate the rotation
-            float rotationalOffset = camera.RotationalOffset;       // In Radians
+            /*float rotationalOffset = camera.RotationalOffset;       // In Radians
             Vector2 spritePosition = transform.Position;
             Vector2 cameraOffset = camera.Offset;
             Vector2 cameraOrigin = camera.Origin;
@@ -53,7 +57,11 @@ namespace MaritimeTravel.Source.GameComponents {
             calculatedPosition.X = (positionRelativeToOrigin.X * CosineTheta) - (positionRelativeToOrigin.Y * SineTheta);
             calculatedPosition.Y = (positionRelativeToOrigin.X * SineTheta) + (positionRelativeToOrigin.Y * CosineTheta);
 
-            Vector2 finalPosition = calculatedPosition - cameraOffset;
+            Vector2 finalPosition = calculatedPosition - cameraOffset;*/
+
+            Vector2 finalPosition = Vector2.Transform(transform.Position, camera.transformation);
+            float rotationalOffset = camera.RotationalOffset;
+
 
             spriteBatch.Draw(
                 Texture, 

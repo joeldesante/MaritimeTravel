@@ -20,6 +20,7 @@ namespace MaritimeTravel.Source.Scene {
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+            camera.CalculateTransformation();
             foreach (GameObject gameObject in gameObjects) {
                 gameObject.Draw(spriteBatch, gameTime, camera);
             }
@@ -52,7 +53,7 @@ namespace MaritimeTravel.Source.Scene {
                     r.Next(-game.GraphicsDevice.Viewport.Height, game.GraphicsDevice.Viewport.Height)
                 );
 
-                b.Transform.Scale = new Vector2((float) Math.Clamp(r.NextDouble(), 0.1, 0.4));
+                b.Transform.Scale = new Vector2((float) Math.Clamp(r.NextDouble(), 5, 10));
 
                 gameObjects.Add(b);
             }
@@ -65,6 +66,9 @@ namespace MaritimeTravel.Source.Scene {
         }
 
         public override void Update(GameTime gameTime) {
+            Vector2 viewportDimensions = new Vector2(this.game.GraphicsDevice.Viewport.Width, this.game.GraphicsDevice.Viewport.Height);
+            camera.Offset = -(viewportDimensions / 2);
+
             foreach (GameObject gameObject in gameObjects) {
                 gameObject.Update(gameTime, camera);
             }

@@ -16,7 +16,7 @@ namespace MaritimeTravel.Source.GameObjects.TutorialSceneObjects {
             this.sprite = new Sprite(texture);
             this.Transform = new Transform(new Vector2(texture.Width, texture.Height));
             this.Transform.Position = new Vector2(500, 500);
-            this.Transform.Scale = new Vector2(0.1f);
+            this.Transform.Scale = new Vector2(10f);
 
             this.sprite.LayerDepth = 0;
         }

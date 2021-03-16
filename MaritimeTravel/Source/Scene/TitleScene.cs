@@ -22,6 +22,7 @@ namespace MaritimeTravel.Source.Scene {
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+            camera.CalculateTransformation();
             logo.Draw(spriteBatch, gameTime, camera);
         }
 
@@ -47,7 +48,7 @@ namespace MaritimeTravel.Source.Scene {
             int logoMargin = viewportWidth / 2;
             int calculatedWidth = viewportWidth - logoMargin;
 
-            logo.Transform.Dimensions = new Vector2(calculatedWidth, calculatedWidth / textureAspectRatio);
+            logo.Drawable.Dimensions = new Vector2(calculatedWidth, calculatedWidth / textureAspectRatio);
 
             // Center the logo
             logo.Transform.Position = new Vector2(
