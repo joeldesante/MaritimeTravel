@@ -7,8 +7,8 @@ using System.Text;
 
 namespace MaritimeTravel.Source.GameObjects {
     class IntroText : GameObject {
-        public GameComponents.Transform Transform { get; }
-        public GameComponents.Sprite Drawable { get; }
+        public GameComponents.Transform Transform { get; set; }
+        public GameComponents.Sprite Drawable { get; set; }
 
         private Camera camera;
 

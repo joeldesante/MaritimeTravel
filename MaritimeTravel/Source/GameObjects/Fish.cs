@@ -24,7 +24,7 @@ namespace MaritimeTravel.Source.GameObjects {
             this.transform = new Transform();
             this.physics = new Rigidbody(30, 0.05f);
             this.health = new Health();
-            this.transform.Scale *= 1;
+            this.transform.Scale *= 2;
             this.fishSprite.LayerDepth = 1;
             this.game = game;
         }
@@ -58,16 +58,16 @@ namespace MaritimeTravel.Source.GameObjects {
             else
                 lastSwimPosition = 0f;
 
+            if (GamePad.GetState(PlayerIndex.One).ThumbSticks.Right.Y != 0)
+            {
+                camera.Zoom += 0.01f * GamePad.GetState(PlayerIndex.One).ThumbSticks.Right.Y * camera.Zoom;
+                camera.Zoom = Math.Clamp(camera.Zoom, 0.1f, 5);
+            }
+
             physics.AddTorque(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y * 5f);
             physics.Update(transform, gameTime);
 
             camera.Origin = transform.Position;
-
-            Vector2 viewportDimensions = new Vector2(this.game.GraphicsDevice.Viewport.Width, this.game.GraphicsDevice.Viewport.Height);
-            camera.Offset = -(viewportDimensions/2);
-            //camera.RotationalOffset += (float) 0.001;
-            //camera.RotationalOffset = 0f;
-            //transform.Rotation = -camera.RotationalOffset;
             camera.RotationalOffset = -transform.Rotation;
         }
     }
