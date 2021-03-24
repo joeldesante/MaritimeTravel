@@ -41,23 +41,26 @@ namespace MaritimeTravel.Source.Systems {
                 Matrix.Multiply(
                     Matrix.Multiply(
                         Matrix.Multiply(
-                            Matrix.Multiply(translate_origin, rotate),
+                            Matrix.Multiply(
+                            translate_origin, 
+                            rotate),
                         scale),
                     globalScale),
-                translate_offset); ;
+                translate_offset);
         }
 
         public void CalculateGlobalScale(Vector2 viewportDimensions) {
 
             float currentWidth;
             float currentHeight;
+            float currentAspectRatio = viewportDimensions.X / viewportDimensions.Y;
 
-            if (viewportDimensions.X > viewportDimensions.Y) {
-                currentWidth = viewportDimensions.X;
-                currentHeight = viewportDimensions.X / this.targetAspectRatio;
-            } else {
+            if (currentAspectRatio < targetAspectRatio) {
                 currentWidth = viewportDimensions.Y * this.targetAspectRatio;
                 currentHeight = viewportDimensions.Y;
+            } else {
+                currentWidth = viewportDimensions.X;
+                currentHeight = viewportDimensions.X / this.targetAspectRatio;
             }
 
             GlobalScale = new Vector2(
